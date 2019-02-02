@@ -4,8 +4,8 @@ namespace Task2
 {
     class Student
     {
-        public string name;
-        public string id;
+        public string name, id;
+        public int year = 1;
         public Student(string name, string id)
         {
             this.name = name;
@@ -14,10 +14,14 @@ namespace Task2
         }
         public void PrintInfo()
         {
-            Console.WriteLine("student name: " + name);
-            Console.WriteLine("student id: " + id);
+            Console.WriteLine("student: " + name);
+            Console.WriteLine("id: " + id);
+            Console.WriteLine("year of study: " + year);
 
-
+        }
+        public void IncrimentYear()
+        {
+            Console.WriteLine("new year of study: " +  ++year);
         }
 
     }
@@ -27,9 +31,12 @@ namespace Task2
         {
             Student s = new Student("Jack", "18BD001000");
             s.PrintInfo();
-            Console.Write("define year of study: ");
-            int year = int.Parse(Console.ReadLine());
-            Console.WriteLine("year of study: " + ++year);
+            s.IncrimentYear();
+           
+            
+
+
+            
 
         }
     }

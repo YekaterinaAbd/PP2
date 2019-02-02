@@ -13,10 +13,11 @@ namespace Task3
 
             //creation array of strings by separating every number using split
             string[] nums = a.Split();
-
-            //printing of every element two times
+            
+            //converting every element to int printing every element two times
             foreach(string num in nums)
             {
+                int.Parse(num);
                 Console.Write(num + " " + num + " " );
             }
         }
