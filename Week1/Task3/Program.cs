@@ -13,13 +13,24 @@ namespace Task3
 
             //creation array of strings by separating every number using split
             string[] nums = a.Split();
+
+            //creation a new array, where repeated elements will be
+            string[] answ = new string[nums.Length * 2];
             
-            //converting every element to int printing every element two times
-            foreach(string num in nums)
+            //nums[0] = answ[0] & answ[1]
+            //nums[1] = answ[2] & answ[3]
+
+           for(int i=0; i<nums.Length; i++)
             {
-                int.Parse(num);
-                Console.Write(num + " " + num + " " );
+                answ[2 * i] = answ[2 * i + 1] = nums[i];
             }
+
+           //writing each element of an array "answ"
+           foreach(string i in answ)
+            {
+                Console.Write(i + " ");
+            }
+            
         }
     }
 }
