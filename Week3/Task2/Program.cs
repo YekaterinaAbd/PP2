@@ -62,7 +62,6 @@ namespace Task2
                 if (i == SelectedItem)
                 {
                     Console.BackgroundColor = ConsoleColor.DarkGray;
-
                 }
                 else
                 {
@@ -77,7 +76,7 @@ namespace Task2
                 }
                 else Console.ForegroundColor = ConsoleColor.Red;
 
-                Console.WriteLine(i + 1 + " " + Content[i].Name);
+                Console.WriteLine(i + 1 + ". " + Content[i].Name);
             }
         }
     }
@@ -88,7 +87,6 @@ namespace Task2
         FileView,
         DirectoryView
     }
-
 
 
 
@@ -107,13 +105,15 @@ namespace Task2
                 }
                 );
             FarMode farMode = FarMode.DirectoryView;
-         
-            while (true)
-            {
+
+            while (true) { 
+
                 if (farMode == FarMode.DirectoryView)
                 {
                     history.Peek().Draw();
                 }
+
+                int x = history.Peek().SelectedItem;
 
                 ConsoleKeyInfo consoleKeyInfo = Console.ReadKey();
                 switch (consoleKeyInfo.Key)
@@ -122,14 +122,12 @@ namespace Task2
                         history.Peek().SelectedItem--;
                         break;
 
-
                     case ConsoleKey.DownArrow:
                         history.Peek().SelectedItem++;
                         break;
 
 
                     case ConsoleKey.Enter:
-                        int x = history.Peek().SelectedItem;
                         FileSystemInfo fsi = history.Peek().Content[x];
 
                         if(fsi.GetType() == typeof(DirectoryInfo)){
@@ -148,7 +146,8 @@ namespace Task2
                             Console.BackgroundColor = ConsoleColor.White;
                             Console.ForegroundColor = ConsoleColor.Black;
                             Console.Clear();
-                            StreamReader read = new StreamReader(fsi.FullName);
+                            FileStream fs = new FileStream(fsi.FullName, FileMode.Open, FileAccess.Read);
+                            StreamReader read = new StreamReader(fs);
                             Console.WriteLine(read.ReadToEnd());
                             read.Close();
                         }
@@ -165,9 +164,10 @@ namespace Task2
                             farMode = FarMode.DirectoryView;
                         }
                         break;
+
+
                     case ConsoleKey.Delete:
-                        int item = history.Peek().SelectedItem;
-                        FileSystemInfo fsi2 = history.Peek().Content[item];
+                       FileSystemInfo fsi2 = history.Peek().Content[x];
                         if (fsi2.GetType() == typeof(DirectoryInfo))
                         {
                             DirectoryInfo directoryInfo = fsi2 as DirectoryInfo;
@@ -177,7 +177,6 @@ namespace Task2
 
                         else
                         { 
-
                             FileInfo fileInfo = fsi2 as FileInfo;
                             fsi2.Delete();
                             history.Peek().Content = fileInfo.Directory.GetFileSystemInfos();
@@ -186,9 +185,10 @@ namespace Task2
 
                     case ConsoleKey.F2:
                         Console.ForegroundColor = ConsoleColor.White;
+                        Console.BackgroundColor = ConsoleColor.Black;
                         Console.Write("New name: ");
-                        int torename = history.Peek().SelectedItem;
-                        FileSystemInfo toRename = history.Peek().Content[torename];
+                       
+                        FileSystemInfo toRename = history.Peek().Content[x];
 
                         if (toRename.GetType() == typeof(DirectoryInfo))
                         {
