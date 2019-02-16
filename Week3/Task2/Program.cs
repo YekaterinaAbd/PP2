@@ -44,14 +44,14 @@ namespace Task2
             {
                 for (int j = i + 1; j < Content.Length; j++)
                 {
-                    {
+                    
                         if (Content[j].GetType() == typeof(DirectoryInfo) && Content[i].GetType() == typeof(FileInfo))
                         {
                             var t = Content[j];
                             Content[j] = Content[i];
                             Content[i] = t;
                         }
-                    }
+                    
                 }
             }
             
@@ -97,13 +97,12 @@ namespace Task2
             string path = @"C:\Users\ и\Documents\PPP2";
             DirectoryInfo dir = new DirectoryInfo(path);
             Stack<Level> history = new Stack<Level>();
-            history.Push(
-                new Level
-                {
-                    Content = dir.GetFileSystemInfos(),
-                    SelectedItem = 0
-                }
-                );
+            Level l = new Level
+            {
+                Content = dir.GetFileSystemInfos(),
+                SelectedItem = 0
+            };
+            history.Push(l);
             FarMode farMode = FarMode.DirectoryView;
 
             while (true) { 

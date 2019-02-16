@@ -9,11 +9,8 @@ namespace Task1
             get;
             set;
         }
-        public int SelectedItem
-        {
-            get;
-            set;   
-        }
+        public int selectedItem;
+       
 
         public void Draw()
         {
@@ -34,23 +31,22 @@ namespace Task1
                 }
             }
 
-                for (int i = 0; i < Content.Length; ++i) { 
+            for (int i = 0; i < Content.Length; ++i) { 
             
-                if (i == SelectedItem)
+                if (i == selectedItem)
                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 else
                 Console.BackgroundColor = ConsoleColor.Black;
-                
+
                 if (Content[i].GetType() == typeof(DirectoryInfo))
                 {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                 }
                 else
                 {
-                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.ForegroundColor = ConsoleColor.Gray;
                 }
-
-                    Console.WriteLine(i + 1 + ". " + Content[i].Name);
+                Console.WriteLine(i + 1 + ". " + Content[i].Name);
                 }
             }
     }
@@ -60,10 +56,10 @@ namespace Task1
         static void Main(string[] args)
         {
             DirectoryInfo dir = new DirectoryInfo(@"C:\Users\ и\Documents\PPP2");
-           Level l = new Level
+            Level l = new Level
             {
                 Content = dir.GetFileSystemInfos(),
-                SelectedItem = 0
+                selectedItem = 0
             };
                 
             l.Draw();
