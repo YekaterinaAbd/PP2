@@ -39,7 +39,7 @@ namespace Task2
             Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
 
-
+            
             for (int i = 0; i < Content.Length; i++)
             {
                 for (int j = i + 1; j < Content.Length; j++)
@@ -54,7 +54,7 @@ namespace Task2
                     }
                 }
             }
-
+            
 
             for (int i = 0; i < Content.Length; ++i)
             {
