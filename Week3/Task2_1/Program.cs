@@ -30,7 +30,11 @@ namespace Task2_1
             {
                 if (i == selectedItem)
                 {
-                    Console.BackgroundColor = ConsoleColor.DarkGray;
+                    if(Content[i] == null)
+                    {
+                        Console.BackgroundColor = ConsoleColor.Red;
+                    }
+                    else Console.BackgroundColor = ConsoleColor.DarkGray;
                 }
                 else Console.BackgroundColor = ConsoleColor.Black;
 
@@ -169,6 +173,7 @@ namespace Task2_1
                     {
                         DirectoryInfo folder4 = fsi4 as DirectoryInfo;
                         Content = folder4.Parent.Parent.GetFileSystemInfos();
+                        selectedItem = 0;
                     }
 
                     if (fsi4.GetType() == typeof(FileInfo))
