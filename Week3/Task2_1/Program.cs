@@ -30,11 +30,7 @@ namespace Task2_1
             {
                 if (i == selectedItem)
                 {
-                    if(Content[i] == null)
-                    {
-                        Console.BackgroundColor = ConsoleColor.Red;
-                    }
-                    else Console.BackgroundColor = ConsoleColor.DarkGray;
+                 Console.BackgroundColor = ConsoleColor.DarkGray;
                 }
                 else Console.BackgroundColor = ConsoleColor.Black;
 
