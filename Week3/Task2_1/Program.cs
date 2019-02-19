@@ -30,7 +30,7 @@ namespace Task2_1
             {
                 if (i == selectedItem)
                 {
-                 Console.BackgroundColor = ConsoleColor.DarkGray;
+                    Console.BackgroundColor = ConsoleColor.DarkGray;
                 }
                 else Console.BackgroundColor = ConsoleColor.Black;
 
@@ -54,7 +54,8 @@ namespace Task2_1
 
         static void Main(string[] args)
         {
-            DirectoryInfo dir = new DirectoryInfo(@"C:\Users\ и\Documents\PPP2");
+            string way = @"C:\Users\ и\Documents\PPP2";
+            DirectoryInfo dir = new DirectoryInfo(way);
             FileSystemInfo[] Content = dir.GetFileSystemInfos();
             int selectedItem = 0;
 
@@ -64,6 +65,7 @@ namespace Task2_1
             bool escape = false;
             while (!escape)
             {
+
                 if (farmode == Farmode.DirectiryView)
 
                     Draw(Content, selectedItem);
@@ -108,7 +110,9 @@ namespace Task2_1
 
                 if (consoleKey.Key == ConsoleKey.F2)
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
                     Console.Write("New name: ");
+
                     FileSystemInfo fsi2 = Content[selectedItem];
                     if (fsi2.GetType() == typeof(DirectoryInfo))
                     {
@@ -128,7 +132,27 @@ namespace Task2_1
 
                 if (consoleKey.Key == ConsoleKey.Enter)
                 {
+                    
                     FileSystemInfo fsi3 = Content[selectedItem];
+
+                    if (fsi3.GetType() == typeof(DirectoryInfo))
+                    {
+                        var folder3 = fsi3 as DirectoryInfo;
+
+                        if (folder3.GetFileSystemInfos().Length == 0)
+                        {
+                            Console.ForegroundColor = ConsoleColor.DarkGreen;
+                            Console.SetCursorPosition(folder3.Name.Length + 5, selectedItem);
+                            Console.Write("Folder is empty");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Content = folder3.GetFileSystemInfos();
+                            selectedItem = 0;
+                        }
+                    }
+
                     if (fsi3.GetType() == typeof(FileInfo))
                     {
                         farmode = Farmode.FileView;
@@ -141,53 +165,44 @@ namespace Task2_1
                         sr.Close();
                         fs.Close();
                     }
-
-                    if (fsi3.GetType() == typeof(DirectoryInfo))
-                    {
-                        var folder3 = fsi3 as DirectoryInfo;
-
-                      //if (folder3.GetFileSystemInfos().Length == 0)
-                      //{ }
-                      //else
-                      //{
-                        Content = folder3.GetFileSystemInfos();
-                        selectedItem = 0;
-                      //}
-                    }
                 }
 
                 if (consoleKey.Key == ConsoleKey.Backspace)
                 {
                     FileSystemInfo fsi4 = Content[selectedItem];
-
-                    if (fsi4 == null)
-                    {
-                        //????
-                    }
-
                     if (fsi4.GetType() == typeof(DirectoryInfo))
                     {
                         DirectoryInfo folder4 = fsi4 as DirectoryInfo;
-                        Content = folder4.Parent.Parent.GetFileSystemInfos();
-                        selectedItem = 0;
-                    }
+                        string current = folder4.Parent.Parent.FullName;
+                        bool b = current.Contains(way);
 
-                    if (fsi4.GetType() == typeof(FileInfo))
-                    {
-                        var file4 = fsi4 as FileInfo;
-                        Console.BackgroundColor = ConsoleColor.Black;
-                        Console.ForegroundColor = ConsoleColor.White;
-                        farmode = Farmode.DirectiryView;
-                        Content = file4.Directory.GetFileSystemInfos();
+                        if (b == true)
+                        {
+                            Content = folder4.Parent.Parent.GetFileSystemInfos();
+                            selectedItem = 0;
+                        }
 
+                        else { }                     
+                        
                     }
+                        if (fsi4.GetType() == typeof(FileInfo))
+                        {
+                            var file4 = fsi4 as FileInfo;
+                            Console.BackgroundColor = ConsoleColor.Black;
+                            Console.ForegroundColor = ConsoleColor.White;
+                            farmode = Farmode.DirectiryView;
+
+                            Content = file4.Directory.GetFileSystemInfos();
+                        }
+                    }
+                    if (consoleKey.Key == ConsoleKey.Escape)
+                        escape = true;
                 }
-                if (consoleKey.Key == ConsoleKey.Escape)
-                    escape = true;
             }
+
         }
     }
-}
+
 
 /*works:
  * Delete 
