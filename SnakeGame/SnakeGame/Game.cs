@@ -98,6 +98,7 @@ namespace SnakeGame
                         wall.Clear();
                         wall.LoadLevel(level);
                         wall.Draw();
+                        food.Draw();
                     }
                     else
                     {
