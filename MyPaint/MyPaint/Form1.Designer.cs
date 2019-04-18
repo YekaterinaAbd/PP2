@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pen = new System.Windows.Forms.Button();
@@ -48,10 +49,16 @@
             this.palette = new System.Windows.Forms.Button();
             this.righttriangle = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.fill = new System.Windows.Forms.Button();
+            this.star = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -76,39 +83,43 @@
             this.pen.Name = "pen";
             this.pen.Size = new System.Drawing.Size(54, 58);
             this.pen.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pen, "Pen");
             this.pen.UseVisualStyleBackColor = false;
             this.pen.Click += new System.EventHandler(this.pen_Click);
             // 
             // rectangle
             // 
             this.rectangle.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.rectangle.Location = new System.Drawing.Point(12, 336);
+            this.rectangle.Image = ((System.Drawing.Image)(resources.GetObject("rectangle.Image")));
+            this.rectangle.Location = new System.Drawing.Point(60, 25);
             this.rectangle.Name = "rectangle";
-            this.rectangle.Size = new System.Drawing.Size(91, 50);
+            this.rectangle.Size = new System.Drawing.Size(54, 54);
             this.rectangle.TabIndex = 2;
-            this.rectangle.Text = "rectangle";
+            this.toolTip1.SetToolTip(this.rectangle, "Rectangle");
             this.rectangle.UseVisualStyleBackColor = false;
             this.rectangle.Click += new System.EventHandler(this.rectangle_Click);
             // 
             // ellipse
             // 
             this.ellipse.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ellipse.Location = new System.Drawing.Point(12, 392);
+            this.ellipse.Image = ((System.Drawing.Image)(resources.GetObject("ellipse.Image")));
+            this.ellipse.Location = new System.Drawing.Point(6, 81);
             this.ellipse.Name = "ellipse";
-            this.ellipse.Size = new System.Drawing.Size(91, 50);
+            this.ellipse.Size = new System.Drawing.Size(54, 50);
             this.ellipse.TabIndex = 3;
-            this.ellipse.Text = "ellipse";
+            this.toolTip1.SetToolTip(this.ellipse, "Ellipse");
             this.ellipse.UseVisualStyleBackColor = false;
             this.ellipse.Click += new System.EventHandler(this.ellipse_Click);
             // 
             // line
             // 
             this.line.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.line.Location = new System.Drawing.Point(12, 283);
+            this.line.Image = ((System.Drawing.Image)(resources.GetObject("line.Image")));
+            this.line.Location = new System.Drawing.Point(6, 25);
             this.line.Name = "line";
-            this.line.Size = new System.Drawing.Size(91, 50);
+            this.line.Size = new System.Drawing.Size(54, 54);
             this.line.TabIndex = 4;
-            this.line.Text = "line";
+            this.toolTip1.SetToolTip(this.line, "Line");
             this.line.UseVisualStyleBackColor = false;
             this.line.Click += new System.EventHandler(this.line_Click);
             // 
@@ -130,8 +141,9 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.saveToolStripMenuItem});
+            this.fileToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("fileToolStripMenuItem.Image")));
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(50, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(74, 29);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
@@ -150,8 +162,9 @@
             // 
             // colorToolStripMenuItem
             // 
+            this.colorToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("colorToolStripMenuItem.Image")));
             this.colorToolStripMenuItem.Name = "colorToolStripMenuItem";
-            this.colorToolStripMenuItem.Size = new System.Drawing.Size(67, 29);
+            this.colorToolStripMenuItem.Size = new System.Drawing.Size(91, 29);
             this.colorToolStripMenuItem.Text = "Color";
             this.colorToolStripMenuItem.Click += new System.EventHandler(this.colorToolStripMenuItem_Click);
             // 
@@ -167,23 +180,25 @@
             this.rubber.Name = "rubber";
             this.rubber.Size = new System.Drawing.Size(54, 58);
             this.rubber.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.rubber, "Rubber");
             this.rubber.UseVisualStyleBackColor = false;
             this.rubber.Click += new System.EventHandler(this.rubber_Click);
             // 
             // triangle
             // 
             this.triangle.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.triangle.Location = new System.Drawing.Point(12, 448);
+            this.triangle.Image = ((System.Drawing.Image)(resources.GetObject("triangle.Image")));
+            this.triangle.Location = new System.Drawing.Point(6, 137);
             this.triangle.Name = "triangle";
-            this.triangle.Size = new System.Drawing.Size(91, 50);
+            this.triangle.Size = new System.Drawing.Size(54, 58);
             this.triangle.TabIndex = 9;
-            this.triangle.Text = "triangle";
+            this.toolTip1.SetToolTip(this.triangle, "Triangle");
             this.triangle.UseVisualStyleBackColor = false;
             this.triangle.Click += new System.EventHandler(this.triangle_Click);
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 151);
+            this.numericUpDown1.Location = new System.Drawing.Point(10, 171);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10,
             0,
@@ -197,6 +212,7 @@
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(108, 26);
             this.numericUpDown1.TabIndex = 10;
+            this.toolTip1.SetToolTip(this.numericUpDown1, "Pen width");
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
             0,
@@ -212,57 +228,108 @@
             this.palette.Name = "palette";
             this.palette.Size = new System.Drawing.Size(54, 59);
             this.palette.TabIndex = 11;
+            this.toolTip1.SetToolTip(this.palette, "Palette");
             this.palette.UseVisualStyleBackColor = false;
             this.palette.Click += new System.EventHandler(this.palette_Click);
             // 
             // righttriangle
             // 
             this.righttriangle.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.righttriangle.Location = new System.Drawing.Point(12, 504);
+            this.righttriangle.Image = ((System.Drawing.Image)(resources.GetObject("righttriangle.Image")));
+            this.righttriangle.Location = new System.Drawing.Point(60, 137);
             this.righttriangle.Name = "righttriangle";
-            this.righttriangle.Size = new System.Drawing.Size(91, 50);
+            this.righttriangle.Size = new System.Drawing.Size(54, 58);
             this.righttriangle.TabIndex = 12;
-            this.righttriangle.Text = "right trian";
+            this.toolTip1.SetToolTip(this.righttriangle, "Right triangle");
             this.righttriangle.UseVisualStyleBackColor = false;
             this.righttriangle.Click += new System.EventHandler(this.righttriangle_Click);
             // 
             // groupBox1
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.fill);
             this.groupBox1.Controls.Add(this.pen);
             this.groupBox1.Controls.Add(this.rubber);
             this.groupBox1.Controls.Add(this.numericUpDown1);
             this.groupBox1.Controls.Add(this.palette);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.groupBox1.Location = new System.Drawing.Point(12, 43);
+            this.groupBox1.Location = new System.Drawing.Point(6, 151);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.groupBox1.Size = new System.Drawing.Size(120, 183);
+            this.groupBox1.Size = new System.Drawing.Size(120, 219);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Pen";
             // 
+            // fill
+            // 
+            this.fill.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.fill.Location = new System.Drawing.Point(60, 86);
+            this.fill.Name = "fill";
+            this.fill.Size = new System.Drawing.Size(54, 59);
+            this.fill.TabIndex = 15;
+            this.fill.Text = "fill";
+            this.toolTip1.SetToolTip(this.fill, "Filling");
+            this.fill.UseVisualStyleBackColor = false;
+            this.fill.Click += new System.EventHandler(this.fill_Click);
+            // 
+            // star
+            // 
+            this.star.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.star.Image = ((System.Drawing.Image)(resources.GetObject("star.Image")));
+            this.star.Location = new System.Drawing.Point(60, 81);
+            this.star.Name = "star";
+            this.star.Size = new System.Drawing.Size(54, 50);
+            this.star.TabIndex = 14;
+            this.toolTip1.SetToolTip(this.star, "Star");
+            this.star.UseVisualStyleBackColor = false;
+            this.star.Click += new System.EventHandler(this.star_Click);
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.line);
+            this.groupBox2.Controls.Add(this.star);
+            this.groupBox2.Controls.Add(this.righttriangle);
+            this.groupBox2.Controls.Add(this.rectangle);
+            this.groupBox2.Controls.Add(this.triangle);
+            this.groupBox2.Controls.Add(this.ellipse);
+            this.groupBox2.Location = new System.Drawing.Point(6, 376);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(120, 215);
+            this.groupBox2.TabIndex = 15;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Figures";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 148);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 20);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Width:";
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
             this.ClientSize = new System.Drawing.Size(1282, 641);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.righttriangle);
-            this.Controls.Add(this.triangle);
-            this.Controls.Add(this.ellipse);
-            this.Controls.Add(this.line);
-            this.Controls.Add(this.rectangle);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "MyPaint";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -289,6 +356,11 @@
         private System.Windows.Forms.Button palette;
         private System.Windows.Forms.Button righttriangle;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button star;
+        private System.Windows.Forms.Button fill;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

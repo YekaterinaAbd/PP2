@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +13,14 @@ namespace MyPaint
 {
     public enum Tool
     {
-        PEN, LINE, RECTANGLE, ELLIPSE, TRIANGLE,
-        RIGHTTRIANGLE
+        PEN,
+        LINE,
+        RECTANGLE,
+        ELLIPSE,
+        TRIANGLE,
+        RIGHTTRIANGLE,
+        STAR,
+        FILL
     };
     public partial class Form1 : Form
     {
@@ -21,6 +28,7 @@ namespace MyPaint
         Graphics graphics;
         Point firstPoint, secondPoint;
         Pen pencil = new Pen(Color.Black, 2);
+        SolidBrush brush = new SolidBrush(Color.White);
         Tool tool = Tool.PEN;
 
 
@@ -31,10 +39,11 @@ namespace MyPaint
             graphics = Graphics.FromImage(bitmap);
             graphics.Clear(Color.White);
             pictureBox1.Image = bitmap;
-            pencil.StartCap = System.Drawing.Drawing2D.LineCap.Round;
-            pencil.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-        }
 
+            pencil.StartCap = LineCap.Round;
+            pencil.EndCap = LineCap.Round;
+        }
+        //buttons click, change of tool
         private void rectangle_Click(object sender, EventArgs e)
         {
             tool = Tool.RECTANGLE;
@@ -62,21 +71,38 @@ namespace MyPaint
         {
             tool = Tool.RIGHTTRIANGLE;
         }
+        private void star_Click(object sender, EventArgs e)
+        {
+            tool = Tool.STAR;
+        }
+        private void fill_Click(object sender, EventArgs e)
+        {
+            tool = Tool.FILL;
+        }
 
+
+        //mouse click
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             firstPoint = e.Location;
+
+            //fill picture
+            if(tool == Tool.FILL)
+            {
+                FillPicture fill = new FillPicture();
+                fill.Fill(pencil.Color, e.Location, bitmap);
+            }
         }
 
+        //when отпускаем мышь
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
+            // drawing on bitmap with saving picture
             switch (tool)
             {
-                case Tool.PEN:
-                    break;
                 case Tool.LINE:
                     secondPoint = e.Location;
-                    graphics.DrawLine(pencil, firstPoint, secondPoint); //drawing on bitmap with saving picture
+                    graphics.DrawLine(pencil, firstPoint, secondPoint); 
                     pictureBox1.Refresh();
                     break;
                 case Tool.RECTANGLE:
@@ -91,18 +117,26 @@ namespace MyPaint
                 case Tool.RIGHTTRIANGLE:
                     graphics.DrawPolygon(pencil, GetrightTriangle(firstPoint, secondPoint));
                     break;
+                case Tool.STAR:
+                    GraphicsPath path = new GraphicsPath(FillMode.Winding);
+                    path.AddPolygon(GetStar(firstPoint, secondPoint));
+                    graphics.DrawPath(pencil, path);
+                    graphics.FillPath(brush, path);
+                    break;
+                case Tool.FILL:
+                    break;
+                default:
+                    break;
             }
         }
 
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            //drawing on picturebox to make the line initially visible, then it disappears
             switch (tool)
             {
-                case Tool.PEN:
-                    break;
                 case Tool.LINE:
                     e.Graphics.DrawLine(pencil, firstPoint, secondPoint);
-                    //drawing on picturebox to make the line initially visible, then it disappears
                     break;
                 case Tool.RECTANGLE:
                     e.Graphics.DrawRectangle(pencil, GetRectangle(firstPoint, secondPoint));
@@ -115,6 +149,16 @@ namespace MyPaint
                     break;
                 case Tool.RIGHTTRIANGLE:
                     e.Graphics.DrawPolygon(pencil, GetrightTriangle(firstPoint, secondPoint));
+                    break;
+                case Tool.STAR:
+                    GraphicsPath path = new GraphicsPath(FillMode.Winding);
+                    path.AddPolygon(GetStar(firstPoint, secondPoint));
+                    e.Graphics.DrawPath(pencil, path);
+                    e.Graphics.FillPath(brush, path);
+                    break;
+                case Tool.FILL:
+                    break;
+                default:
                     break;
             }
         }
@@ -131,17 +175,12 @@ namespace MyPaint
                         graphics.DrawLine(pencil, firstPoint, secondPoint);
                         firstPoint = secondPoint;
                         break;
-                    case Tool.LINE:
-                        break;
-                    case Tool.RECTANGLE:
-                        break;
-                    case Tool.ELLIPSE:
-                        break;
                 }
                 pictureBox1.Refresh();
             }
         }
 
+        //select a color
         private void colorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(colorDialog1.ShowDialog() == DialogResult.OK)
@@ -150,14 +189,19 @@ namespace MyPaint
             }
         }
 
+        //save picture
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+            saveFileDialog1.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
+            saveFileDialog1.Title = "Save an image file";
+            saveFileDialog1.AddExtension = true;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 bitmap.Save(saveFileDialog1.FileName);
             }
         }
 
+        //open picture
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -168,13 +212,27 @@ namespace MyPaint
             }
         }
 
+        //rubber
         private void rubber_Click(object sender, EventArgs e)
         {
             tool = Tool.PEN;
             pencil.Color = Color.White;
         }
 
+        //pencil width
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            pencil.Width = decimal.ToInt32(numericUpDown1.Value);
+        }
 
+        //пипетка
+        private void palette_Click(object sender, EventArgs e)
+        {
+            pencil.Color = Color.FromArgb(bitmap.GetPixel(firstPoint.X, firstPoint.Y).ToArgb());
+
+        }
+
+        //function for dwawing a rectungle
         public Rectangle GetRectangle(Point first, Point second)
         {
             Rectangle rectangle = new Rectangle();
@@ -187,40 +245,60 @@ namespace MyPaint
             return rectangle;
         }
 
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-           
-            pencil.Width = decimal.ToInt32(numericUpDown1.Value);
-        }
 
-        private void palette_Click(object sender, EventArgs e)
-        {
-            pencil.Color = Color.FromArgb(bitmap.GetPixel(firstPoint.X, firstPoint.Y).ToArgb());
-            
-        }
-
+        //function for drawing a triangle
         public Point[] GetTriangle(Point first, Point second)
         {
             Point[] triangle =
             {
-                new Point(first.X, first.Y),
-                new Point(second.X, first.Y),
-                new Point((second.X + firstPoint.X)/2, second.Y)
+                new Point(first.X, Math.Max( first.Y, second.Y)),
+                new Point(second.X, Math.Max( first.Y, second.Y)),
+                new Point((second.X + firstPoint.X)/2, Math.Min(first.Y, second.Y))
             };
 
             return triangle;
         }
 
 
+        //function for drawing right triangle
         public Point[] GetrightTriangle(Point first, Point second)
         {
             Point[] triangle =
             {
-                new Point(first.X, first.Y),
-                new Point(second.X, first.Y),
-                new Point(first.X, second.Y)
+                new Point(Math.Min( first.X, second.X), Math.Min( first.Y, second.Y)),
+                new Point( first.X, Math.Max( first.Y, second.Y)),
+                new Point(second.X, Math.Max( first.Y, second.Y))
             };
             return triangle;
+        }
+
+        //function for drawing a star
+        public Point[] GetStar(Point first, Point second) 
+        {
+            Rectangle bounds = new Rectangle();
+            bounds.X = first.X;
+            bounds.Y = Math.Min(first.Y, second.Y);
+            bounds.Width = second.X - first.X;
+            bounds.Height = Math.Abs(second.Y - first.Y);
+
+            Point[] star =
+            {
+                //new Point(first.X + bounds.Width/2, first.Y),
+                new Point(first.X + bounds.Width/2, Math.Min(first.Y, second.Y)),
+
+                //new Point(second.X - bounds.Width/6, second.Y),
+                new Point(second.X - bounds.Width/6, Math.Max(first.Y, second.Y)),
+
+                //new Point(first.X, first.Y + bounds.Height/3),
+                new Point(first.X, Math.Min(first.Y + bounds.Height/3, second.Y + bounds.Height/3)),
+
+                //new Point(second.X, first.Y + bounds.Height/3),
+                new Point(second.X, Math.Min(first.Y + bounds.Height/3, second.Y + bounds.Height/3)),
+
+               //new Point(first.X + bounds.Width/6, first.Y + bounds.Height)
+                new Point(first.X + bounds.Width/6, Math.Max( first.Y, second.Y))
+            };
+            return star;
         }
     }
 }
