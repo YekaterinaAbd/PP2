@@ -20,7 +20,8 @@ namespace MyPaint
         TRIANGLE,
         RIGHTTRIANGLE,
         STAR,
-        FILL
+        FILL,
+        GDIFILL
     };
     public partial class Form1 : Form
     {
@@ -77,7 +78,8 @@ namespace MyPaint
         }
         private void fill_Click(object sender, EventArgs e)
         {
-            tool = Tool.FILL;
+            //tool = Tool.FILL;
+            tool = Tool.GDIFILL;
         }
 
 
@@ -91,6 +93,13 @@ namespace MyPaint
             {
                 FillPicture fill = new FillPicture();
                 fill.Fill(pencil.Color, e.Location, bitmap);
+            }
+            if(tool == Tool.GDIFILL)
+            {
+                MapFill mapFill = new MapFill();
+                mapFill.Fill(graphics, e.Location, pencil.Color, ref bitmap);
+                graphics = Graphics.FromImage(bitmap);
+                pictureBox1.Image = bitmap;
             }
         }
 
@@ -124,6 +133,8 @@ namespace MyPaint
                     graphics.FillPath(brush, path);
                     break;
                 case Tool.FILL:
+                    break;
+                case Tool.GDIFILL:
                     break;
                 default:
                     break;
